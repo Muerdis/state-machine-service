@@ -1,0 +1,19 @@
+# Pycharm
+.idea/
+
+# mypy
+.mypy_cache/
+
+# Byte-compiled
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Logs
+*.log
+
+# Environments
+.env
+.venv
+env/
+venv/
