@@ -3,7 +3,6 @@ from transitions import Machine
 
 app = Flask(__name__)
 
-
 STATES = {
     'sleep_state': 'Сплю',
     'code_state': 'Пишу код',
@@ -45,15 +44,22 @@ def get_state_and_actions(state, action):
 
     now_state = developer.state
     available_transactions = list(filter(lambda d: d['source'] == now_state, TRANSACTIONS))
-    response = []
+    actions = []
     for av_transaction in available_transactions:
-        response.append({
-           'trigger':  {av_transaction['trigger']: ACTIONS[av_transaction['trigger']]},
-           'source':  {av_transaction['source']: STATES[av_transaction['source']]},
-           'dest':  {av_transaction['dest']: STATES[av_transaction['dest']]}
+        actions.append({
+            'key': av_transaction['trigger'],
+            'value': ACTIONS[av_transaction['trigger']]
         })
 
-    return jsonify({'results': response})
+    response = {
+        'now_state': {
+            'key': now_state,
+            'value': STATES[now_state]
+        },
+        'actions': actions
+    }
+
+    return jsonify(response)
 
 
 if __name__ == '__main__':
